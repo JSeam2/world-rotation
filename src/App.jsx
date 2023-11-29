@@ -1,10 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import * as THREE from 'three'
-import { useRef } from 'react'
-import { Canvas } from '@react-three/fiber'
-// import { OrbitControls, PivotControls } from '@react-three/drei'
-// import { Geometry, Base, Subtraction, Addition } from '@react-three/csg'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { Environment } from './Environment'
 import World from "./World"
 
@@ -34,16 +31,19 @@ const buttonStyle = {
 };
 
 function App() {
+  const [rotate, setRotate] = useState(false);
+
 
   return (
     <>
       <Canvas className="root" shadows camera={{ position: [-15, 10, 15], fov: 25 }}>
         <color attach="background" args={['black']} />
-        <World />
+        <World rotate={rotate} setRotate={setRotate} />
         <Environment />
       </Canvas>
       <button
         style={buttonStyle}
+        onClick={() => setRotate(true)}
         onMouseEnter={() => (buttonStyle.background = hoverStyle.background, buttonStyle.boxShadow = hoverStyle.boxShadow)}
         onMouseLeave={() => (buttonStyle.background = 'hsl(210, 100%, 50%)', buttonStyle.boxShadow = '0 0 10px hsl(210, 100%, 70%), 0 0 20px hsl(210, 100%, 70%), 0 0 40px hsl(210, 100%, 70%)')}
       >
